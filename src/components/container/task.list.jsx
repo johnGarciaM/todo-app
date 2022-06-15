@@ -5,9 +5,10 @@ import TaskComponent from "../pure/task";
 
 const TaskListComponent = () => {
   const defaultTask = new Task("Ejemplo", "test", false, LEVELS.NORMAL);
-  const changeState = (id) => {
-    console.log("Cambiar estado id :>> ", id);
-  };
+  // !pending
+  // const changeState = (id) => {
+  //   console.log("Cambiar estado id :>> ", id);
+  // };
   return (
     <div>
       <h1>Tus tareas:</h1>
