@@ -1,9 +1,9 @@
 import "./App.css";
 // import { Person } from "./models/person.class";
-// import TaskListComponent from "./components/container/task.list.jsx";
+import TaskListComponent from "./components/container/task.list.jsx";
 // import ContactComponent from "./components/container/contact";
 // import ClockComponent from "./components/pure/Clock.jsx";
-import Father from "./components/container/father";
+// import Father from "./components/container/father";
 
 function App() {
 	// const myPerson = new Person({
@@ -14,10 +14,10 @@ function App() {
 	// });
 	return (
 		<div className="App">
-			{/* <TaskListComponent></TaskListComponent> */}
+			<TaskListComponent></TaskListComponent>
 			{/* <ContactComponent></ContactComponent> */}
 			{/* <ClockComponent person={myPerson}></ClockComponent> */}
-			<Father></Father>
+			{/* <Father></Father> */}
 		</div>
 	);
 }
