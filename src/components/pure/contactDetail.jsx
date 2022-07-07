@@ -2,7 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Contact } from "../../models/contact.class";
 
-export const ContactDetail = ({ contacts, updateContact, deleteContact }) => {
+export const ContactDetail = ({
+	contacts,
+	openModal,
+	updateContact,
+	deleteContact,
+}) => {
 	const customBadge = (state) => {
 		return state ? (
 			<span className="badge bg-success">Áctivo</span>
@@ -24,7 +29,7 @@ export const ContactDetail = ({ contacts, updateContact, deleteContact }) => {
 							<i
 								className="pe-auto bi bi-pencil-square m-3"
 								role="button"
-								onClick={updateContact(contact.id)}
+								onClick={() => updateContact(contact.id)}
 							></i>
 							<i
 								className="pe-auto bi bi-trash"
@@ -57,18 +62,23 @@ export const ContactDetail = ({ contacts, updateContact, deleteContact }) => {
 				<tbody>
 					{/* previous rows */}
 					{CustomRows()}
-					{/* add new contacts */}
-					<div className="d-flex">
-						<i class="fs-4 bi bi-plus-circle"></i>
-					</div>
 				</tbody>
 			</table>
+			{/* add new contacts */}
+			<div className="d-flex">
+				<i
+					className="fs-4 bi bi-plus-circle"
+					onClick={() => openModal()}
+					role="button"
+				></i>
+			</div>
 		</div>
 	);
 };
 
 ContactDetail.propTypes = {
 	contacts: PropTypes.arrayOf(PropTypes.instanceOf(Contact)).isRequired,
+	openModal: PropTypes.func.isRequired,
 	updateContact: PropTypes.func.isRequired,
 	deleteContact: PropTypes.func.isRequired,
 };
