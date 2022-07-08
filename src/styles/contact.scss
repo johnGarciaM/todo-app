@@ -33,6 +33,15 @@ dialog {
 				}
 				outline: none;
 			}
+			select {
+				width: 30vw;
+				margin-bottom: 1rem;
+				border-radius: 5px;
+				padding: 4px;
+				&:valid {
+					border: 1px solid rgb(3, 169, 3);
+				}
+			}
 		}
 	}
 }

@@ -5,9 +5,11 @@ import "../../styles/contact.scss";
 
 const ContactComponent = () => {
 	// * Initialize variables form
+	const idRef = useRef(0);
 	const nameRef = useRef("");
 	const lastNameRef = useRef("");
 	const emailRef = useRef("");
+	const connectedRef = useRef("yes");
 
 	// * Initialize contacts by default.
 	const contact1 = new Contact({
@@ -26,30 +28,55 @@ const ContactComponent = () => {
 	});
 
 	let [contacts, setContacts] = useState([contact1, contact2]);
+	let [isUpdating, setUpdating] = useState(false);
 	const modalRef = useRef();
 
 	const addContact = (e) => {
 		e.preventDefault();
-		const newContact = new Contact({
-			id: new Date().getTime(),
-			name: nameRef.current.value,
-			lastName: lastNameRef.current.value,
-			email: emailRef.current.value,
-			connected: true,
-		});
-		contacts = [...contacts, newContact];
+		let currentContact = null;
+		let connected = connectedRef.current.value === "yes" ? true : false;
+		if (!isUpdating) {
+			currentContact = new Contact({
+				id: new Date().getTime(),
+				name: nameRef.current.value,
+				lastName: lastNameRef.current.value,
+				email: emailRef.current.value,
+				connected,
+			});
+			contacts = [...contacts, currentContact];
+		} else {
+			currentContact = new Contact({
+				id: +idRef.current.value,
+				name: nameRef.current.value,
+				lastName: lastNameRef.current.value,
+				email: emailRef.current.value,
+				connected,
+			});
+			contacts = contacts.map((item) => {
+				if (item.id === currentContact.id) {
+					item = currentContact;
+				}
+				return item;
+			});
+		}
 		setContacts(contacts);
+		setUpdating(false);
 		setTimeout(() => {
 			modalRef.current.close();
-		}, 1000);
+		}, 500);
 	};
 
 	const openModal = () => {
 		modalRef.current.showModal();
 	};
 
-	const updateContact = (id) => {
-		console.log("id :>> ", id);
+	const updateContact = (contact) => {
+		idRef.current.value = contact.id;
+		nameRef.current.value = contact.name;
+		lastNameRef.current.value = contact.lastName;
+		emailRef.current.value = contact.email;
+		setUpdating(true);
+		openModal();
 	};
 
 	const handleDialog = (e) => {
@@ -100,8 +127,17 @@ const ContactComponent = () => {
 							tabIndex="3"
 							required
 						/>
-						<input type="hidden" name="id" />
-						<input type="submit" value="Enviar" />
+						<label htmlFor="connected">¿Esta áctivo?</label>
+						<select name="connected" id="connected" ref={connectedRef}>
+							<option value="yes">Áctivo</option>
+							<option value="not">Ináctivo</option>
+						</select>
+						<input type="hidden" name="id" ref={idRef} />
+						{isUpdating ? (
+							<input type="submit" value="Actualizar" />
+						) : (
+							<input type="submit" value="Guardar" />
+						)}
 					</fieldset>
 				</form>
 			</dialog>

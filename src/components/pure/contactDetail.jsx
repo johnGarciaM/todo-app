@@ -29,7 +29,7 @@ export const ContactDetail = ({
 							<i
 								className="pe-auto bi bi-pencil-square m-3"
 								role="button"
-								onClick={() => updateContact(contact.id)}
+								onClick={() => updateContact(contact)}
 							></i>
 							<i
 								className="pe-auto bi bi-trash"
