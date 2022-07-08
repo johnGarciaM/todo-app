@@ -68,7 +68,7 @@ export const ContactDetail = ({
 			<div className="d-flex">
 				<i
 					className="fs-4 bi bi-plus-circle"
-					onClick={() => openModal()}
+					onClick={() => openModal(false)}
 					role="button"
 				></i>
 			</div>

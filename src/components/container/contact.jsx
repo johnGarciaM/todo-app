@@ -66,7 +66,14 @@ const ContactComponent = () => {
 		}, 500);
 	};
 
-	const openModal = () => {
+	const openModal = (value) => {
+		if (!value) {
+			idRef.current.value = 0;
+			nameRef.current.value = "";
+			lastNameRef.current.value = "";
+			emailRef.current.value = "";
+			connectedRef.current.value = "yes";
+		}
 		modalRef.current.showModal();
 	};
 
@@ -76,7 +83,9 @@ const ContactComponent = () => {
 		lastNameRef.current.value = contact.lastName;
 		emailRef.current.value = contact.email;
 		setUpdating(true);
-		openModal();
+		setTimeout(() => {
+			openModal(true);
+		}, 500);
 	};
 
 	const handleDialog = (e) => {
