@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
 import { Contact } from "../../models/contact.class";
 import { ContactDetail } from "../pure/contactDetail";
+import { ModalContact } from "../pure/forms/modalContact";
 import "../../styles/contact.scss";
 
 const ContactComponent = () => {
 	// * Initialize variables form
+	const modalRef = useRef(null);
 	const idRef = useRef(0);
 	const nameRef = useRef("");
 	const lastNameRef = useRef("");
@@ -29,7 +31,6 @@ const ContactComponent = () => {
 
 	let [contacts, setContacts] = useState([contact1, contact2]);
 	let [isUpdating, setUpdating] = useState(false);
-	const modalRef = useRef();
 
 	const addContact = (e) => {
 		e.preventDefault();
@@ -66,14 +67,13 @@ const ContactComponent = () => {
 		}, 500);
 	};
 
-	const openModal = (value) => {
-		if (!value) {
-			idRef.current.value = 0;
-			nameRef.current.value = "";
-			lastNameRef.current.value = "";
-			emailRef.current.value = "";
-			connectedRef.current.value = "yes";
-		}
+	const openModal = () => {
+		setUpdating(false);
+		idRef.current.value = 0;
+		nameRef.current.value = "";
+		lastNameRef.current.value = "";
+		emailRef.current.value = "";
+		connectedRef.current.value = "yes";
 		modalRef.current.showModal();
 	};
 
@@ -84,7 +84,7 @@ const ContactComponent = () => {
 		emailRef.current.value = contact.email;
 		setUpdating(true);
 		setTimeout(() => {
-			openModal(true);
+			modalRef.current.showModal();
 		}, 500);
 	};
 
@@ -99,66 +99,20 @@ const ContactComponent = () => {
 		setContacts(contacts);
 	};
 
-	const modalComponent = () => {
-		return (
-			<dialog
-				ref={modalRef}
-				onClick={(event) => handleDialog(event)}
-				id="custom-modal"
-			>
-				<form onSubmit={addContact}>
-					<fieldset>
-						<legend>Datos personales</legend>
-						<label htmlFor="name">Nombre del contacto:</label>
-						<input
-							ref={nameRef}
-							type="text"
-							name="name"
-							placeholder="Nombre completo"
-							tabIndex="1"
-							required
-						/>
-						<label htmlFor="lastName">Apellidos del contacto:</label>
-						<input
-							ref={lastNameRef}
-							type="text"
-							name="lastName"
-							placeholder="Apellidos"
-							tabIndex="2"
-							required
-						/>
-						<label htmlFor="email">Correo del contacto:</label>
-						<input
-							ref={emailRef}
-							type="email"
-							name="email"
-							placeholder="Correo electrónico"
-							tabIndex="3"
-							required
-						/>
-						<label htmlFor="connected">¿Esta áctivo?</label>
-						<select name="connected" id="connected" ref={connectedRef}>
-							<option value="yes">Áctivo</option>
-							<option value="not">Ináctivo</option>
-						</select>
-						<input type="hidden" name="id" ref={idRef} />
-						{isUpdating ? (
-							<input type="submit" value="Actualizar" />
-						) : (
-							<input type="submit" value="Guardar" />
-						)}
-					</fieldset>
-				</form>
-			</dialog>
-		);
-	};
-
 	return (
 		<div>
 			<h1>Información de contactos</h1>
-			{/* Modal component */}
-			{modalComponent()}
-			{/* Contact detail */}
+			<ModalContact
+				modalRef={modalRef}
+				handleDialog={handleDialog}
+				addContact={addContact}
+				nameRef={nameRef}
+				lastNameRef={lastNameRef}
+				emailRef={emailRef}
+				connectedRef={connectedRef}
+				idRef={idRef}
+				isUpdating={isUpdating}
+			/>
 			<ContactDetail
 				contacts={contacts}
 				openModal={openModal}

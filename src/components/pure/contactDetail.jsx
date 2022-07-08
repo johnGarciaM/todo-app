@@ -68,7 +68,7 @@ export const ContactDetail = ({
 			<div className="d-flex">
 				<i
 					className="fs-4 bi bi-plus-circle"
-					onClick={() => openModal(false)}
+					onClick={() => openModal()}
 					role="button"
 				></i>
 			</div>
@@ -82,5 +82,3 @@ ContactDetail.propTypes = {
 	updateContact: PropTypes.func.isRequired,
 	deleteContact: PropTypes.func.isRequired,
 };
-
-export default ContactDetail;
