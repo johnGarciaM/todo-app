@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import "../../../styles/contact.scss";
 
 export const ModalContact = ({
@@ -62,4 +63,34 @@ export const ModalContact = ({
 			</form>
 		</dialog>
 	);
+};
+
+ModalContact.propTypes = {
+	modalRef: PropTypes.oneOfType([
+		PropTypes.func,
+		PropTypes.shape({ current: PropTypes.instanceOf(HTMLDialogElement) }),
+	]).isRequired,
+	addContact: PropTypes.func.isRequired,
+	handleDialog: PropTypes.func.isRequired,
+	nameRef: PropTypes.oneOfType([
+		PropTypes.func,
+		PropTypes.shape({ current: PropTypes.any }),
+	]).isRequired,
+	lastNameRef: PropTypes.oneOfType([
+		PropTypes.func,
+		PropTypes.shape({ current: PropTypes.any }),
+	]).isRequired,
+	emailRef: PropTypes.oneOfType([
+		PropTypes.func,
+		PropTypes.shape({ current: PropTypes.any }),
+	]).isRequired,
+	connectedRef: PropTypes.oneOfType([
+		PropTypes.func,
+		PropTypes.shape({ current: PropTypes.any }),
+	]).isRequired,
+	idRef: PropTypes.oneOfType([
+		PropTypes.func,
+		PropTypes.shape({ current: PropTypes.any }),
+	]).isRequired,
+	isUpdating: PropTypes.bool.isRequired,
 };
